@@ -1,4 +1,6 @@
-﻿namespace UKLotto;
+﻿using Serilog;
+
+namespace UKLotto;
 
 internal static class Rules
 {
@@ -10,7 +12,6 @@ internal static class Rules
         if (BallMatchFour(luckyDipNum, lottoNum)) return 40;
         if (BallMatchThree(luckyDipNum, lottoNum)) return 30;
         if (BallMatchTwo(luckyDipNum, lottoNum)) return 20;
-
         return -1;
     }
 
@@ -40,8 +41,7 @@ internal static class Rules
 
     private static bool BallMatchFiveBonus(List<int> luckyDipNum, List<int> lottoNum, int lottoNumBonus)
     {
-        lottoNum.Add(lottoNumBonus);
-        var matchCount = luckyDipNum.Sum(i => lottoNum.Count(j => i == j));
+        var matchCount = luckyDipNum.Sum(i => lottoNum.Append(lottoNumBonus).Count(j => i == j));
         return matchCount == 6;
     }
 

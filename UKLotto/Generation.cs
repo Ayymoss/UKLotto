@@ -2,7 +2,7 @@
 
 namespace UKLotto;
 
-internal static class Generation
+internal class Generation
 {
     internal static List<int> GenerateLotto()
     {
@@ -17,14 +17,14 @@ internal static class Generation
 
         if (lottoList.Count != lottoList.Distinct().Count())
         {
-            Log.Error("Generation.GenerateLotto Duplicate");
+            Log.Debug("Generation.GenerateLotto Duplicate");
             GenerateLotto();
         }
         
         return lottoList;
     }
 
-    internal static List<int> GenerateLuckyDip()
+    internal List<int> GenerateLuckyDip()
     {
         var rand = new Random();
         var luckyDip = new List<int>();
@@ -37,7 +37,7 @@ internal static class Generation
         
         if (luckyDip.Count != luckyDip.Distinct().Count())
         {
-            Log.Error("Generation.GenerateLuckyDip Duplicate");
+            Log.Debug("Generation.GenerateLuckyDip Duplicate");
             GenerateLuckyDip();
         }
 
