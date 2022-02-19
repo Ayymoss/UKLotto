@@ -1,6 +1,4 @@
-﻿using Serilog;
-
-namespace UKLotto;
+﻿namespace UKLotto;
 
 internal static class Rules
 {
@@ -47,7 +45,6 @@ internal static class Rules
 
     private static bool BallMatchSix(List<int> luckyDipNum, List<int> lottoNum)
     {
-        var matchCount = luckyDipNum.Sum(i => lottoNum.Count(j => i == j));
-        return matchCount == 6;
+        return luckyDipNum.OrderBy(e => e).SequenceEqual(lottoNum.OrderBy(e => e));
     }
 }

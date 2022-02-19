@@ -4,46 +4,21 @@ namespace UKLotto;
 
 internal class Generation
 {
-    internal static List<int> GenerateLotto()
-    {
-        var rand = new Random();
-        var lottoList = new List<int>();
-        var i = 0;
-        while (i < 6)
-        {
-            lottoList.Add(rand.Next(1, 60));
-            i++;
-        }
-
-        if (lottoList.Count != lottoList.Distinct().Count())
-        {
-            Log.Debug("Generation.GenerateLotto Duplicate");
-            GenerateLotto();
-        }
-        
-        return lottoList;
-    }
-
-    internal List<int> GenerateLuckyDip()
+    internal List<int> GenerateNumbers()
     {
         while (true)
         {
             var rand = new Random();
-            var luckyDip = new List<int>();
+            var lottoList = new List<int>();
             var i = 0;
             while (i < 6)
             {
-                luckyDip.Add(rand.Next(1, 60));
+                lottoList.Add(rand.Next(1, 60));
                 i++;
             }
 
-            if (luckyDip.Count != luckyDip.Distinct().Count())
-            {
-                Log.Debug("Generation.GenerateLuckyDip Duplicate");
-                continue;
-            }
-
-            return luckyDip;
+            if (lottoList.Count == lottoList.Distinct().Count()) return lottoList;
+            Log.Debug("Generation.GenerateLotto Duplicate");
         }
     }
 

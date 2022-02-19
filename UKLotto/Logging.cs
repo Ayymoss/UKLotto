@@ -1,7 +1,7 @@
 ﻿using Serilog;
 namespace UKLotto;
 
-public class Logging
+internal static class Logging
 {
     internal static void Enable()
     {
