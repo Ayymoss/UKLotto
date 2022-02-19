@@ -139,7 +139,7 @@ internal static class UkLotto
     private static void TicketProcessing(List<int> ticket)
     {
         Console.Clear();
-        Console.WriteLine("\nTicket Numbers: {0}", string.Join("-", ticket));
+        Console.WriteLine("Ticket Numbers: {0}", string.Join("-", ticket));
         var ticketMatchId = 0;
         var lottoList = new List<int>();
         

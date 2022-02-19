@@ -9,16 +9,16 @@ internal class Generation
         while (true)
         {
             var rand = new Random();
-            var lottoList = new List<int>();
+            var numList = new List<int>();
             var i = 0;
             while (i < 6)
             {
-                lottoList.Add(rand.Next(1, 60));
+                numList.Add(rand.Next(1, 60));
                 i++;
             }
 
-            if (lottoList.Count == lottoList.Distinct().Count()) return lottoList;
-            Log.Debug("Generation.GenerateLotto Duplicate");
+            if (numList.Count == numList.Distinct().Count()) return numList;
+            Log.Debug("Generation Duplicate");
         }
     }
 
