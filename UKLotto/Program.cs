@@ -41,7 +41,7 @@ internal static class UkLotto
                 CustomTicket();
                 break;
         }
-
+        Console.ReadKey();
         Logging.Disable();
     }
 
@@ -205,6 +205,7 @@ internal static class UkLotto
         Console.WriteLine("The Jackpot ID is the amount of games it took to win with your numbers...\n");
 
         Log.Information($"Application Time: {Timer.ElapsedMilliseconds / 1000f}s");
+        
         Timer.Stop();
     }
 }
