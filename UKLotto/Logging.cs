@@ -8,7 +8,6 @@ internal static class Logging
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.Console()
-            .WriteTo.File("logs/UKLotto.txt", rollingInterval: RollingInterval.Day)
             .CreateLogger();
         Log.Debug("[Logger] Enabled");
     }

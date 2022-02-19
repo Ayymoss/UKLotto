@@ -151,7 +151,8 @@ internal static class UkLotto
         Console.Clear();
         while (true)
         {
-            var cTicket = "Enter 6 (n<60>0) numbers separated by a space".PromptString();
+            Console.WriteLine("\nEnter 6 numbers separated by space. (n<60>0 & No Duplicates)");
+            var cTicket = "Your Custom Ticket".PromptString();
             var cTicketList = new List<int>();
             foreach (var i in cTicket.Split(" "))
             {
@@ -163,7 +164,7 @@ internal static class UkLotto
                 }
             }
 
-            if (cTicketList.Count == 6)
+            if (cTicketList.Count == cTicketList.Distinct().Count() && cTicketList.Count == 6)
             {
                 _luckyDip = cTicketList;
                 TicketProcessing();
