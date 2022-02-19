@@ -14,7 +14,7 @@ internal static class UkLotto
         var stopwatch = new Stopwatch();
 
         //const int ticketSales = 45_000_000;
-        const int ticketSales = 1_000_000;
+        const int ticketSales = 2_000_000;
         var spent = ticketSales * 2;
         var paid = 0;
         var profit = 0;

@@ -26,22 +26,25 @@ internal class Generation
 
     internal List<int> GenerateLuckyDip()
     {
-        var rand = new Random();
-        var luckyDip = new List<int>();
-        var i = 0;
-        while (i < 6)
+        while (true)
         {
-            luckyDip.Add(rand.Next(1, 60));
-            i++;
-        }
-        
-        if (luckyDip.Count != luckyDip.Distinct().Count())
-        {
-            Log.Debug("Generation.GenerateLuckyDip Duplicate");
-            GenerateLuckyDip();
-        }
+            var rand = new Random();
+            var luckyDip = new List<int>();
+            var i = 0;
+            while (i < 6)
+            {
+                luckyDip.Add(rand.Next(1, 60));
+                i++;
+            }
 
-        return luckyDip;
+            if (luckyDip.Count != luckyDip.Distinct().Count())
+            {
+                Log.Debug("Generation.GenerateLuckyDip Duplicate");
+                continue;
+            }
+
+            return luckyDip;
+        }
     }
 
     internal static int GenerateBonus()
