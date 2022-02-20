@@ -11,6 +11,9 @@ Generate or use a custom ticket to run 100m Lotto Numbers (To see how many games
 ### Contact
 Discord: Ayymoss#8334
 
+### Requirements
+.NET Core 6 Runtime https://dotnet.microsoft.com/en-us/download/dotnet/6.0
+
 ### Notes
 I'm still learning C# at a basic level. There's likely to be a lot of stupid mistakes, bad pratices and otherwise 'unacceptable' code. Please excuse that.
 ***
