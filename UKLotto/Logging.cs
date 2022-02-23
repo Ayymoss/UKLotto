@@ -8,6 +8,7 @@ internal static class Logging
         Log.Logger = new LoggerConfiguration()
             .MinimumLevel.Information()
             .WriteTo.Console()
+            .MinimumLevel.Information()
             .CreateLogger();
         Log.Debug("[Logger] Enabled");
     }
