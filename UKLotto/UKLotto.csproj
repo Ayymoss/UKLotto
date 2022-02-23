@@ -12,4 +12,8 @@
       <PackageReference Include="Serilog.Sinks.Console" Version="4.0.2-dev-00890" />
     </ItemGroup>
 
+    <ItemGroup>
+      <None Remove="Rules.txt" />
+    </ItemGroup>
+
 </Project>

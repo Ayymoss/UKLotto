@@ -49,24 +49,4 @@ public static class Helper
 
         return response;
     }
-
-    public static float PromptFloat(this string question, float? defaultValue = 0f)
-    {
-        Console.Write(
-            $"{question}: ");
-        float response;
-
-        string? InputOrDefault()
-        {
-            var input = Console.ReadLine();
-            return string.IsNullOrEmpty(input) && defaultValue != 0f ? defaultValue.ToString() : input;
-        }
-
-        while (!float.TryParse(InputOrDefault(), out response))
-        {
-            Console.Write($"Enter a valid number: ");
-        }
-
-        return response;
-    }
 }
