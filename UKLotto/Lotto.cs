@@ -6,16 +6,9 @@ public class Lotto
 {
     private static List<int> _lottoNum = new();
     private static List<int> _luckyDip = new();
-    private static int _lottoBonus;
-    private static int _payout;
-    private static int _ballMatchZero;
-    private static int _ballMatchTwo;
-    private static int _ballMatchThree;
-    private static int _ballMatchFour;
-    private static int _ballMatchFive;
-    private static int _ballMatchFiveBonus;
-    private static int _ballMatchSix;
-    private static int _rollOverCount;
+
+    // LottoBonus = [0], Payout = [1], RollOverCount = [2], BallZero-Six = [3-9]
+    private static int[] _lottoData = {0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 
     public void LottoProcessingInit()
     {
@@ -28,16 +21,16 @@ public class Lotto
 
             LottoProcessing();
 
-            if (_rollOverCount == 5)
+            if (_lottoData[2] == 5)
             {
                 Console.WriteLine("5th roll over!");
                 Console.WriteLine("5+ Bonus Winners share £10m");
                 break;
             }
 
-            _rollOverCount += 1;
-            if (_ballMatchSix != 0) break;
-            Console.WriteLine("Current Roll Over: {0}", _rollOverCount);
+            _lottoData[2] += 1;
+            if (_lottoData[9] != 0) break;
+            Console.WriteLine("Current Roll Over: {0}", _lottoData[2]);
             var userConfirm = "Do you wish to process Roll Over's? (y/n)".PromptString();
 
             if (userConfirm?.ToLower() == "y")
@@ -45,68 +38,67 @@ public class Lotto
                 continue;
             }
 
-            
             break;
         }
 
-        Console.WriteLine("\nLotto Numbers: \t\t{0}, Bonus Ball: {1}", string.Join("-", _lottoNum), _lottoBonus);
-        Console.WriteLine("Lotto Ticket Sales: \t{0:N0}\n", UkLotto.TicketSales * _rollOverCount);
-        Console.WriteLine("0  Matches: \t{0:N0}", _ballMatchZero);
-        Console.WriteLine("2  Matches: \t{0:N0}", _ballMatchTwo);
-        Console.WriteLine("3  Matches: \t{0:N0}", _ballMatchThree);
-        Console.WriteLine("4  Matches: \t{0:N0}", _ballMatchFour);
-        Console.WriteLine("5  Matches: \t{0:N0}", _ballMatchFive);
-        Console.WriteLine("5B Matches: \t{0:N0}", _ballMatchFiveBonus);
-        Console.WriteLine("6  Matches: \t{0:N0}\n", _ballMatchSix);
-        Console.WriteLine("Spent: \t\t{0:C0}", UkLotto.TicketSales * 2 * _rollOverCount);
-        Console.WriteLine("Paid: \t\t{0:C0}", _payout);
-        Console.WriteLine("Profit: \t{0:C0}", _payout - UkLotto.TicketSales * 2 * _rollOverCount);
+        Console.WriteLine("\nLotto Numbers: \t\t{0}, Bonus Ball: {1}", string.Join("-", _lottoNum), _lottoData[0]);
+        Console.WriteLine("Lotto Ticket Sales: \t{0:N0}\n", UkLotto.TicketSales * _lottoData[2]);
+        Console.WriteLine("0/1 Matches: \t{0:N0}", _lottoData[3]);
+        Console.WriteLine("2  Matches: \t{0:N0}", _lottoData[4]);
+        Console.WriteLine("3  Matches: \t{0:N0}", _lottoData[5]);
+        Console.WriteLine("4  Matches: \t{0:N0}", _lottoData[6]);
+        Console.WriteLine("5  Matches: \t{0:N0}", _lottoData[7]);
+        Console.WriteLine("5B Matches: \t{0:N0}", _lottoData[8]);
+        Console.WriteLine("6  Matches: \t{0:N0}\n", _lottoData[9]);
+        Console.WriteLine("Spent: \t\t{0:C0}", UkLotto.TicketSales * 2 * _lottoData[2]);
+        Console.WriteLine("Paid: \t\t{0:C0}", _lottoData[1]);
+        Console.WriteLine("Profit: \t{0:C0}", _lottoData[1] - UkLotto.TicketSales * 2 * _lottoData[2]);
         Console.Beep();
     }
 
     private static void LottoProcessing()
     {
         _lottoNum = new Generation().GenerateNumbers();
-        _lottoBonus = Generation.GenerateBonus();
+        _lottoData[0] = Generation.GenerateBonus();
         Parallel.For(1, UkLotto.TicketSales, new ParallelOptions {MaxDegreeOfParallelism = 200}, i =>
         {
             _luckyDip = new Generation().GenerateNumbers();
             while (true)
             {
-                switch ((LottoValue) Rules.GlobalMatching(_luckyDip, _lottoNum, _lottoBonus))
+                switch ((LottoValue) Rules.GlobalMatching(_luckyDip, _lottoNum, _lottoData[0]))
                 {
                     case LottoValue.BallTwo:
-                        Interlocked.Increment(ref _ballMatchTwo);
+                        Interlocked.Increment(ref _lottoData[4]);
                         _luckyDip = new Generation().GenerateNumbers();
-                        if (_rollOverCount == 4)
+                        if (_lottoData[2] == 4)
                         {
-                            Interlocked.Add(ref _payout, 5);
+                            Interlocked.Add(ref _lottoData[1], 5);
                         }
 
                         continue;
                     case LottoValue.BallThree:
-                        Interlocked.Increment(ref _ballMatchThree);
-                        Interlocked.Add(ref _payout, 30);
+                        Interlocked.Increment(ref _lottoData[5]);
+                        Interlocked.Add(ref _lottoData[1], 30);
                         break;
                     case LottoValue.BallFour:
-                        Interlocked.Increment(ref _ballMatchFour);
-                        Interlocked.Add(ref _payout, 140);
+                        Interlocked.Increment(ref _lottoData[6]);
+                        Interlocked.Add(ref _lottoData[1], 140);
                         break;
                     case LottoValue.BallFive:
-                        Interlocked.Increment(ref _ballMatchFive);
-                        Interlocked.Add(ref _payout, 1_750);
+                        Interlocked.Increment(ref _lottoData[7]);
+                        Interlocked.Add(ref _lottoData[1], 1_750);
                         break;
                     case LottoValue.BallFiveBonus:
-                        Interlocked.Increment(ref _ballMatchFiveBonus);
-                        Interlocked.Add(ref _payout, 1_000_000);
+                        Interlocked.Increment(ref _lottoData[7]);
+                        Interlocked.Add(ref _lottoData[1], 1_000_000);
                         break;
                     case LottoValue.BallSix:
-                        Interlocked.Increment(ref _ballMatchSix);
-                        Interlocked.Add(ref _payout, 10_000_000);
-                        //Log.Information($"Jackpot Winner: {string.Join("-", genLuckyDip)} | Ticket ID: {i:N0}");
+                        Interlocked.Increment(ref _lottoData[9]);
+                        Interlocked.Add(ref _lottoData[1], 10_000_000);
+                        Log.Information("Jackpot Winner: {One} | Ticket ID: {Two:N0}", string.Join("-", _lottoNum), i);
                         break;
                     default:
-                        Interlocked.Increment(ref _ballMatchZero);
+                        Interlocked.Increment(ref _lottoData[3]);
                         break;
                 }
 
