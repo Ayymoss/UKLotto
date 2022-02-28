@@ -23,8 +23,6 @@ internal static class Rules
         return matchCount == 6;
     }
 
-    private static bool BallMatchSix(List<int> luckyDipNum, List<int> lottoNum)
-    {
-        return luckyDipNum.OrderBy(e => e).SequenceEqual(lottoNum.OrderBy(e => e));
-    }
+    private static bool BallMatchSix(List<int> luckyDipNum, List<int> lottoNum) =>
+        luckyDipNum.OrderBy(e => e).SequenceEqual(lottoNum.OrderBy(e => e));
 }
